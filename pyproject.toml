@@ -14,7 +14,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7"]
+pdf = [
+    "Pillow>=10",
+    "reportlab>=4",
+]
+dev = [
+    "pytest>=7",
+    "Pillow>=10",
+    "reportlab>=4",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]

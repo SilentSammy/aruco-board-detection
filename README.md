@@ -19,6 +19,12 @@ python -m pip install -e ".[dev]"
 python -m pytest
 ```
 
+PDF generation is optional:
+
+```console
+python -m pip install -e ".[pdf]"
+```
+
 ## Quick start
 
 ```python
@@ -32,7 +38,11 @@ board = GridBoardConfig(
     size=(3, 4),
     marker_length=0.05,
     board_width=0.56,
+    print_width=0.60,
 )
+
+board.generate_image(output="board.png")
+board.generate_pdf("board.pdf")
 
 detector = BoardDetector(
     board,
@@ -48,8 +58,9 @@ if result is not None:
     print(result.project_image_point((320, 240)))
 ```
 
-Generate a printable source image or individual markers with
-`GridBoardConfig.generate_image()` and `generate_markers()`.
+Generate a printable PNG, an exact-size PDF, or individual markers with
+`GridBoardConfig.generate_image()`, `GridBoardConfig.generate_pdf()`, and
+`generate_markers()`.
 
 All physical dimensions are expressed in meters. The pose matrix transforms
 coordinates from the centered board frame into the camera frame.

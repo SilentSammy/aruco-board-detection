@@ -26,6 +26,20 @@ def test_board_geometry_and_generation():
     assert board.generate_image(500, margin_px=20).shape == (740, 540)
 
 
+def test_generates_exact_size_pdf(tmp_path):
+    board = GridBoardConfig(
+        cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50),
+        size=(3, 4),
+        marker_length=0.05,
+        board_width=0.25,
+        print_width=0.30,
+    )
+    assert np.allclose(board.print_dimensions, (0.30, 0.40))
+
+    output = board.generate_pdf(tmp_path / "board.pdf", image_width_px=500)
+    assert output.read_bytes().startswith(b"%PDF-")
+
+
 def test_detects_generated_board():
     board = make_board()
     image = board.generate_image(500, margin_px=50)
